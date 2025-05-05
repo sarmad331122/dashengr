@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 from datetime import datetime
 import time
+import pytz
+
 
 # ========== CONFIG ==========
 API_KEY = "9d9d38293c1c436a9e5141950250305"  
@@ -107,7 +109,11 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-st.caption(f"⏰ تازہ کاری کا وقت: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+pakistan_timezone = pytz.timezone("Asia/Karachi")
+pakistan_time = datetime.now(pakistan_timezone)
+
+# Display the time in the app
+st.write(f"{pakistan_time.strftime('%Y-%m-%d %I:%M:%S %p')} 🕒 : موجودہ وقت ")
 
 # ========== AUTO REFRESH ==========
 time.sleep(600)  # 10 minutes
