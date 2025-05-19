@@ -1,13 +1,18 @@
 import streamlit as st
 import requests
 from datetime import datetime
-import time
 import pytz
+import time
 
+
+st.set_page_config(page_title="اینگرو فرٹیلائزر ہیٹ اسٹروک رسک ڈیش بورڈ", layout="centered")
 
 # ========== CONFIG ==========
-API_KEY = "9d9d38293c1c436a9e5141950250305"  
-CITY = "Vehari"
+API_KEY = "9d9d38293c1c436a9e5141950250305"
+
+# Ask user for city
+CITY = st.text_input("اپنے شہر کا نام درج کریں (مثلاً: Vehari, Multan)", "Vehari")
+
 URL = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={CITY}&aqi=no"
 
 # ========== FUNCTIONS ==========
@@ -65,7 +70,6 @@ def risk_color(risk_level):
     return colors.get(risk_level, "#cccccc")
 
 # ========== STREAMLIT UI ==========
-st.set_page_config(page_title="ویہاری اسٹروک رسک", layout="centered")
 
 st.markdown("""
 <style>
@@ -83,7 +87,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🌡️ اینگرو فرٹیلائزرز - اسٹروک رسک ڈیش بورڈ")
+st.title(f"🌡️ {CITY} - اسٹروک رسک ڈیش بورڈ")
 st.write("📍 موجودہ موسم کی بنیاد پر اسٹروک سے بچاؤ کی معلومات")
 
 temp, humidity, condition = get_weather()
