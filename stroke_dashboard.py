@@ -27,6 +27,7 @@ def get_weather():
     except:
         return None, None, None, "Error fetching data"
 
+
 def assess_risk(temp, humidity):
     if temp is None:
         return "Error", "⚠️ ڈیٹا حاصل نہیں ہو سکا"
