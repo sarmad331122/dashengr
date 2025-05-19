@@ -20,11 +20,12 @@ def get_weather():
     try:
         response = requests.get(URL).json()
         temp = response['current']['temp_c']
+        feels_like = response['current']['feelslike_c']
         humidity = response['current']['humidity']
         condition = response['current']['condition']['text']
-        return temp, humidity, condition
+        return temp, feels_like, humidity, condition
     except:
-        return None, None, "Error fetching data"
+        return None, None, None, "Error fetching data"
 
 def assess_risk(temp, humidity):
     if temp is None:
@@ -89,14 +90,14 @@ st.markdown("""
 st.title(f"🌡️ اینگرو فرٹیلائزر اسٹروک رسک ڈیش بورڈ- {CITY}")
 st.write("📍 موجودہ موسم کی بنیاد پر اسٹروک سے بچاؤ کی معلومات")
 
-temp, humidity, condition = get_weather()
+temp, feels_like, humidity, condition = get_weather()
 risk, advice = assess_risk(temp, humidity)
 color = risk_color(risk)
 
 # ========== METRICS ==========
 col1, col2, col3 = st.columns(3)
 feels_like = response['current']['feelslike_c'] if temp else None
-col1.metric("🌡️ درجہ حرارت", f"{temp}°C", f"Feels like {feels_like}°C" if feels_like else "")
+col1.metric("🌡️ درجہ حرارت", f"{temp}°C" if temp else "N/A", f"Feels like {feels_like}°C" if feels_like else "")
 col2.metric("💧 نمی", f"{humidity}%" if humidity else "N/A")
 col3.metric("🌤️ موسم", condition)
 
