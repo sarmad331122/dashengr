@@ -86,7 +86,7 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-st.title(f"🌡️ -اینگرو فرٹیلائزر اسٹروک رسک ڈیش بورڈ- {CITY}")
+st.title(f"🌡️ اینگرو فرٹیلائزر اسٹروک رسک ڈیش بورڈ- {CITY}")
 st.write("📍 موجودہ موسم کی بنیاد پر اسٹروک سے بچاؤ کی معلومات")
 
 temp, humidity, condition = get_weather()
@@ -95,7 +95,8 @@ color = risk_color(risk)
 
 # ========== METRICS ==========
 col1, col2, col3 = st.columns(3)
-col1.metric("🌡️ درجہ حرارت", f"{temp}°C" if temp else "N/A")
+feels_like = response['current']['feelslike_c'] if temp else None
+col1.metric("🌡️ درجہ حرارت", f"{temp}°C", f"Feels like {feels_like}°C" if feels_like else "")
 col2.metric("💧 نمی", f"{humidity}%" if humidity else "N/A")
 col3.metric("🌤️ موسم", condition)
 
